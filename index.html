@@ -1,0 +1,2409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Industrial Insulation & Cladding Estimation Tool - Professional Cost Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #f9fafb;
+            color: #111827;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header Styles */
+        .header {
+            background: linear-gradient(to right, #1e40af, #3b82f6);
+            color: white;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-box {
+            background: white;
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-letters {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        .logo-letter {
+            padding: 0.125rem 0.375rem;
+            font-weight: bold;
+            font-size: 0.875rem;
+            color: white;
+            border-radius: 0.25rem;
+        }
+
+        .logo-i { background-color: #1e40af; }
+        .logo-c { background-color: #f97316; }
+        .logo-e { background-color: #1e40af; }
+
+        /* Tab Navigation */
+        .tab-nav {
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-list {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        .tab-button {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.75rem 1rem;
+            font-weight: 500;
+            font-size: 0.875rem;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #4b5563;
+        }
+
+        .tab-button:hover {
+            color: #111827;
+            background-color: #f9fafb;
+        }
+
+        .tab-button.active {
+            color: #374151;
+            border-bottom-color: #f97316;
+            background-color: #f3f4f6;
+        }
+
+        /* Card Styles */
+        .card {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-header {
+            font-size: 1.125rem;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .header-bar {
+            width: 0.375rem;
+            height: 1.5rem;
+            margin-right: 0.75rem;
+            border-radius: 0.25rem;
+        }
+
+        /* Form Styles */
+        .form-grid {
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .form-group {
+            margin-bottom: 0.75rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 0.25rem;
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            padding: 0.375rem 0.5rem;
+            font-size: 0.875rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.25rem;
+            transition: all 0.2s;
+        }
+
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        /* Button Styles */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            border-radius: 0.5rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background-color: #3b82f6;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2563eb;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-secondary {
+            background-color: #6b7280;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #4b5563;
+        }
+
+        .btn-sm {
+            padding: 0.25rem 0.75rem;
+            font-size: 0.75rem;
+        }
+
+        .btn-toggle {
+            padding: 0.5rem 1rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+            border-radius: 0.5rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-toggle.active {
+            background-color: #3b82f6;
+            color: white;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-toggle:not(.active) {
+            background-color: #e5e7eb;
+            color: #374151;
+        }
+
+        .btn-toggle:not(.active):hover {
+            background-color: #d1d5db;
+        }
+
+        /* Grid Layouts */
+        .grid-2 { grid-template-columns: repeat(2, 1fr); }
+        .grid-3 { grid-template-columns: repeat(3, 1fr); }
+        .grid-4 { grid-template-columns: repeat(4, 1fr); }
+        .grid-5 { grid-template-columns: repeat(5, 1fr); }
+        .grid-6 { grid-template-columns: repeat(6, 1fr); }
+
+        /* Result Cards */
+        .result-card {
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            background: linear-gradient(to bottom right, var(--from-color), var(--to-color));
+        }
+
+        .result-label {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--label-color);
+        }
+
+        .result-value {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #1f2937;
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            font-size: 0.875rem;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 0.5rem;
+            font-weight: 600;
+            color: #374151;
+            font-size: 0.75rem;
+            background-color: #f9fafb;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        td {
+            padding: 0.5rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        tbody tr:hover {
+            background-color: #f9fafb;
+        }
+
+        /* Info Box */
+        .info-box {
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            border: 1px solid;
+            font-size: 0.75rem;
+        }
+
+        .info-box-blue {
+            background-color: #dbeafe;
+            border-color: #93c5fd;
+            color: #1e40af;
+        }
+
+        .info-box-green {
+            background-color: #d1fae5;
+            border-color: #6ee7b7;
+            color: #065f46;
+        }
+
+        .info-box-yellow {
+            background-color: #fef3c7;
+            border-color: #fde68a;
+            color: #92400e;
+        }
+
+        .info-box-orange {
+            background-color: #fed7aa;
+            border-color: #fdba74;
+            color: #9a3412;
+        }
+
+        /* Insulation type buttons */
+        .insulation-type-btn {
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            border: 2px solid #e5e7eb;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+            text-align: left;
+        }
+
+        .insulation-type-btn:hover {
+            border-color: #d1d5db;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .insulation-type-btn.active {
+            border-color: #3b82f6;
+            background-color: #eff6ff;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        /* Utility Classes */
+        .hidden { display: none; }
+        .text-center { text-align: center; }
+        .text-right { text-align: right; }
+        .text-sm { font-size: 0.875rem; }
+        .text-xs { font-size: 0.75rem; }
+        .font-bold { font-weight: bold; }
+        .font-semibold { font-weight: 600; }
+        .mt-2 { margin-top: 0.5rem; }
+        .mt-3 { margin-top: 0.75rem; }
+        .mt-4 { margin-top: 1rem; }
+        .mb-2 { margin-bottom: 0.5rem; }
+        .mb-3 { margin-bottom: 0.75rem; }
+        .mb-4 { margin-bottom: 1rem; }
+
+        /* Responsive */
+        @media (min-width: 768px) {
+            .form-grid { grid-template-columns: repeat(4, 1fr); }
+        }
+
+        @media (min-width: 1024px) {
+            .form-grid { grid-template-columns: repeat(6, 1fr); }
+        }
+
+        /* Icons */
+        .icon {
+            width: 1rem;
+            height: 1rem;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        /* Print Styles */
+        @media print {
+            body { background: white; }
+            .header, .tab-nav, .btn { display: none; }
+            .card { box-shadow: none; border: 1px solid #e5e7eb; }
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo-section">
+                        <div class="logo-box">
+                            <div class="logo-letters">
+                                <span class="logo-letter logo-i">I</span>
+                                <span class="logo-letter logo-c">C</span>
+                                <span class="logo-letter logo-e">E</span>
+                            </div>
+                        </div>
+                        <div>
+                            <h1 style="font-size: 1.5rem; font-weight: bold;">Industrial Insulation & Cladding Estimator</h1>
+                            <p style="font-size: 0.75rem; color: #dbeafe;">Professional Estimation Tool for Pipes & Valves</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <button class="btn btn-primary" onclick="resetAll()">
+                            <span>↻</span> Reset
+                        </button>
+                        <div style="text-align: right;">
+                            <p style="font-weight: 600; font-size: 0.875rem;">Industrial Contracting Excellence</p>
+                            <p style="font-size: 0.75rem; color: #dbeafe;">Your Insulation Partner</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Tab Navigation -->
+        <nav class="tab-nav">
+            <div class="container">
+                <div class="tab-list">
+                    <button class="tab-button active" onclick="switchTab('calculator')">
+                        <span>🧮</span> Calculator
+                    </button>
+                    <button class="tab-button" onclick="switchTab('boq')">
+                        <span>📋</span> BOQ & Analysis
+                    </button>
+                    <button class="tab-button" onclick="switchTab('workforce')">
+                        <span>👥</span> Workforce Planning
+                    </button>
+                    <button class="tab-button" onclick="switchTab('dashboard')">
+                        <span>📊</span> Dashboard
+                    </button>
+                    <button class="tab-button" onclick="switchTab('reports')">
+                        <span>📄</span> Reports
+                    </button>
+                    <button class="tab-button" onclick="switchTab('settings')">
+                        <span>⚙️</span> Settings
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="container" style="padding: 1.5rem 1rem;">
+            <!-- Calculator Tab -->
+            <div id="calculator-tab" class="tab-content">
+                <!-- Project Information -->
+                <div class="card">
+                    <h2 class="card-header">
+                        <span class="header-bar" style="background-color: #4b5563;"></span>
+                        Project Information
+                    </h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Client Name</label>
+                            <input type="text" class="form-input" id="clientName" placeholder="Enter client" oninput="debounceCalculate()">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Project Name</label>
+                            <input type="text" class="form-input" id="projectName" placeholder="Enter project" oninput="debounceCalculate()">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Location</label>
+                            <input type="text" class="form-input" id="location" placeholder="Enter location" oninput="debounceCalculate()">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Date</label>
+                            <input type="date" class="form-input" id="date" onchange="calculateAll()">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Operating Temperature (°C)</label>
+                            <input type="number" class="form-input" id="operatingTemp" value="150" onchange="calculateAll()">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Project Duration (Days)</label>
+                            <input type="number" class="form-input" id="projectDuration" value="30" onchange="calculateAll()">
+                        </div>
+                    </div>
+                    <p class="text-xs" style="color: #6b7280; margin-top: 0.5rem;">
+                        <strong>Working Schedule:</strong> 10 hours/day, 6 days/week • Temperature affects insulation material selection
+                    </p>
+                </div>
+
+                <!-- Insulation Type & System -->
+                <div class="card">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div>
+                            <h2 class="card-header">
+                                <span class="header-bar" style="background-color: #f97316;"></span>
+                                Insulation System Type
+                            </h2>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                                <button class="insulation-type-btn active" onclick="selectInsulationType('pipe')" data-type="pipe">
+                                    <strong style="font-size: 0.875rem;">🔧 Pipe Insulation</strong>
+                                    <p style="font-size: 0.75rem; color: #4b5563;">Straight & bent pipes</p>
+                                </button>
+                                <button class="insulation-type-btn" onclick="selectInsulationType('valve')" data-type="valve">
+                                    <strong style="font-size: 0.875rem;">⚙️ Valve Insulation</strong>
+                                    <p style="font-size: 0.75rem; color: #4b5563;">Various valve types</p>
+                                </button>
+                                <button class="insulation-type-btn" onclick="selectInsulationType('equipment')" data-type="equipment">
+                                    <strong style="font-size: 0.875rem;">🏭 Equipment</strong>
+                                    <p style="font-size: 0.75rem; color: #4b5563;">Tanks & vessels</p>
+                                </button>
+                                <button class="insulation-type-btn" onclick="selectInsulationType('mixed')" data-type="mixed">
+                                    <strong style="font-size: 0.875rem;">📊 Mixed System</strong>
+                                    <p style="font-size: 0.75rem; color: #4b5563;">Pipes + valves</p>
+                                </button>
+                            </div>
+                            <div class="info-box info-box-blue mt-3">
+                                <p><strong>Material Cost Analysis:</strong> Compare material hire vs purchase costs for optimal project economics.</p>
+                                <p class="text-xs mt-1"><strong>Note:</strong> Unit rates include material, labor, overhead, and margin for accurate bidding.</p>
+                            </div>
+                        </div>
+                        <div>
+                            <h2 class="card-header">
+                                <span class="header-bar" style="background-color: #4b5563;"></span>
+                                System Specifications
+                            </h2>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;" id="specs-grid">
+                                <div class="form-group" id="pipe-diameter-group">
+                                    <label class="form-label">Pipe Diameter (inches)</label>
+                                    <select class="form-select" id="pipeDiameter" onchange="calculateAll()">
+                                        <option value="">Select diameter</option>
+                                        <option value="2">2"</option>
+                                        <option value="3">3"</option>
+                                        <option value="4">4"</option>
+                                        <option value="6">6"</option>
+                                        <option value="8">8"</option>
+                                        <option value="10">10"</option>
+                                        <option value="12">12"</option>
+                                        <option value="14">14"</option>
+                                        <option value="16">16"</option>
+                                        <option value="18">18"</option>
+                                        <option value="20">20"</option>
+                                        <option value="24">24"</option>
+                                    </select>
+                                </div>
+                                <div class="form-group" id="pipe-length-group">
+                                    <label class="form-label">Total Length (meters)</label>
+                                    <input type="number" class="form-input" id="pipeLength" placeholder="0" onchange="calculateAll()">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Insulation Thickness (mm)</label>
+                                    <select class="form-select" id="insulationThickness" onchange="calculateAll()">
+                                        <option value="25">25mm</option>
+                                        <option value="50" selected>50mm</option>
+                                        <option value="75">75mm</option>
+                                        <option value="100">100mm</option>
+                                        <option value="125">125mm</option>
+                                        <option value="150">150mm</option>
+                                    </select>
+                                </div>
+                                <div class="form-group" id="valve-count-group" style="display: none;">
+                                    <label class="form-label">Number of Valves</label>
+                                    <input type="number" class="form-input" id="valveCount" value="0" onchange="calculateAll()">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Insulation Material</label>
+                                    <select class="form-select" id="insulationMaterial" onchange="calculateAll()">
+                                        <option value="mineral_wool">Mineral Wool</option>
+                                        <option value="fiberglass">Fiberglass</option>
+                                        <option value="elastomeric">Elastomeric</option>
+                                        <option value="calcium_silicate">Calcium Silicate</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Cladding Material</label>
+                                    <select class="form-select" id="claddingMaterial" onchange="calculateAll()">
+                                        <option value="aluminum">Aluminum 0.5mm</option>
+                                        <option value="stainless_steel">Stainless Steel 0.5mm</option>
+                                        <option value="pvc">PVC Coating</option>
+                                        <option value="galvanized">Galvanized Steel</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div id="system-note" class="info-box info-box-yellow mt-3">
+                                <strong>Pipe Insulation:</strong> Calculate material quantities and installation costs for straight pipe runs. Includes fittings and accessories.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Crew Categories & Rates -->
+                <div class="card">
+                    <h2 class="card-header">
+                        <span class="header-bar" style="background-color: #8b5cf6;"></span>
+                        Crew Categories & Hourly Rates
+                    </h2>
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem;">
+                        <div class="form-group">
+                            <label class="form-label" style="display: flex; align-items: center;">
+                                <input type="checkbox" id="supervisor-enabled" checked style="margin-right: 0.25rem;" onchange="calculateAll()">
+                                Insulation Supervisor
+                            </label>
+                            <div style="display: flex; gap: 0.25rem;">
+                                <input type="number" class="form-input" id="supervisor-rate" value="55" placeholder="Rate" style="width: 4rem;" onchange="calculateAll()">
+                                <input type="number" class="form-input" id="supervisor-qty" value="1" placeholder="Qty" style="width: 3rem;" onchange="calculateAll()">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" style="display: flex; align-items: center;">
+                                <input type="checkbox" id="leadInsulator-enabled" checked style="margin-right: 0.25rem;" onchange="calculateAll()">
+                                Lead Insulator
+                            </label>
+                            <div style="display: flex; gap: 0.25rem;">
+                                <input type="number" class="form-input" id="leadInsulator-rate" value="45" placeholder="Rate" style="width: 4rem;" onchange="calculateAll()">
+                                <input type="number" class="form-input" id="leadInsulator-qty" value="2" placeholder="Qty" style="width: 3rem;" onchange="calculateAll()">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" style="display: flex; align-items: center;">
+                                <input type="checkbox" id="mechanic-enabled" checked style="margin-right: 0.25rem;" onchange="calculateAll()">
+                                Insulation Mechanic
+                            </label>
+                            <div style="display: flex; gap: 0.25rem;">
+                                <input type="number" class="form-input" id="mechanic-rate" value="38" placeholder="Rate" style="width: 4rem;" onchange="calculateAll()">
+                                <input type="number" class="form-input" id="mechanic-qty" value="4" placeholder="Qty" style="width: 3rem;" onchange="calculateAll()">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" style="display: flex; align-items: center;">
+                                <input type="checkbox" id="helper-enabled" checked style="margin-right: 0.25rem;" onchange="calculateAll()">
+                                Helper/Apprentice
+                            </label>
+                            <div style="display: flex; gap: 0.25rem;">
+                                <input type="number" class="form-input" id="helper-rate" value="25" placeholder="Rate" style="width: 4rem;" onchange="calculateAll()">
+                                <input type="number" class="form-input" id="helper-qty" value="2" placeholder="Qty" style="width: 3rem;" onchange="calculateAll()">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" style="display: flex; align-items: center;">
+                                <input type="checkbox" id="safetyWatch-enabled" checked style="margin-right: 0.25rem;" onchange="calculateAll()">
+                                Safety Watch
+                            </label>
+                            <div style="display: flex; gap: 0.25rem;">
+                                <input type="number" class="form-input" id="safetyWatch-rate" value="35" placeholder="Rate" style="width: 4rem;" onchange="calculateAll()">
+                                <input type="number" class="form-input" id="safetyWatch-qty" value="1" placeholder="Qty" style="width: 3rem;" onchange="calculateAll()">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" style="display: flex; align-items: center;">
+                                <input type="checkbox" id="scaffolding-enabled" style="margin-right: 0.25rem;" onchange="calculateAll()">
+                                Scaffolding Crew
+                            </label>
+                            <div style="display: flex; gap: 0.25rem;">
+                                <input type="number" class="form-input" id="scaffolding-rate" value="40" placeholder="Rate" style="width: 4rem;" onchange="calculateAll()">
+                                <input type="number" class="form-input" id="scaffolding-qty" value="2" placeholder="Qty" style="width: 3rem;" onchange="calculateAll()">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" style="display: flex; align-items: center;">
+                                <input type="checkbox" id="equipment-enabled" style="margin-right: 0.25rem;" onchange="calculateAll()">
+                                Equipment Operator
+                            </label>
+                            <div style="display: flex; gap: 0.25rem;">
+                                <input type="number" class="form-input" id="equipment-rate" value="50" placeholder="Rate" style="width: 4rem;" onchange="calculateAll()">
+                                <input type="number" class="form-input" id="equipment-qty" value="1" placeholder="Qty" style="width: 3rem;" onchange="calculateAll()">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" style="display: flex; align-items: center;">
+                                <input type="checkbox" id="qualityControl-enabled" checked style="margin-right: 0.25rem;" onchange="calculateAll()">
+                                Quality Control
+                            </label>
+                            <div style="display: flex; gap: 0.25rem;">
+                                <input type="number" class="form-input" id="qualityControl-rate" value="60" placeholder="Rate" style="width: 4rem;" onchange="calculateAll()">
+                                <input type="number" class="form-input" id="qualityControl-qty" value="1" placeholder="Qty" style="width: 3rem;" onchange="calculateAll()">
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-xs" style="color: #6b7280; margin-top: 0.5rem;">
+                        <strong>Note:</strong> Rates are per hour. Crew composition automatically adjusts based on project complexity and accessibility factors.
+                    </p>
+                </div>
+
+                <!-- Calculation Results -->
+                <div class="card">
+                    <h2 class="card-header">
+                        <span class="header-bar" style="background-color: #f97316;"></span>
+                        Calculation Results
+                    </h2>
+                    
+                    <div style="display: grid; gap: 0.75rem; margin-bottom: 1rem;" class="grid-4">
+                        <div class="result-card" style="--from-color: #eff6ff; --to-color: #dbeafe;">
+                            <p class="result-label" style="--label-color: #2563eb;">Surface Area</p>
+                            <p class="result-value" id="result-surface-area">0 m²</p>
+                        </div>
+                        <div class="result-card" style="--from-color: #f0fdf4; --to-color: #d1fae5;">
+                            <p class="result-label" style="--label-color: #059669;">Material Qty</p>
+                            <p class="result-value" id="result-material-qty">0 m³</p>
+                        </div>
+                        <div class="result-card" style="--from-color: #fff7ed; --to-color: #fed7aa;">
+                            <p class="result-label" style="--label-color: #ea580c;">Manhours</p>
+                            <p class="result-value" id="result-manhours">0 hrs</p>
+                            <p class="text-xs" style="color: #6b7280;">Total crew hours</p>
+                        </div>
+                        <div class="result-card" style="--from-color: #f3f4f6; --to-color: #e5e7eb;">
+                            <p class="result-label" style="--label-color: #374151;">Total Cost</p>
+                            <p class="result-value" id="result-total-cost">SAR 0.00</p>
+                        </div>
+                    </div>
+
+                    <div style="background-color: #f9fafb; padding: 0.75rem; border-radius: 0.5rem; margin-bottom: 1rem;">
+                        <h3 style="font-size: 0.875rem; font-weight: 600; color: #374151; margin-bottom: 0.5rem;">Unit Rates</h3>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem;">
+                            <div style="background: white; padding: 0.5rem; border-radius: 0.25rem; border: 1px solid #e5e7eb;">
+                                <p class="text-xs" style="color: #6b7280;">Per Linear Meter</p>
+                                <p style="font-size: 1.125rem; font-weight: bold; color: #3b82f6;" id="unit-rate-linear">SAR 0.00/m</p>
+                                <p class="text-xs" style="color: #f97316; margin-top: 0.25rem;" id="pipe-diameter-display">0" pipe</p>
+                            </div>
+                            <div style="background: white; padding: 0.5rem; border-radius: 0.25rem; border: 1px solid #e5e7eb;">
+                                <p class="text-xs" style="color: #6b7280;">Per Valve (Avg)</p>
+                                <p style="font-size: 1.125rem; font-weight: bold; color: #10b981;" id="unit-rate-valve">SAR 0.00/ea</p>
+                                <div class="text-xs" style="color: #6b7280; margin-top: 0.25rem;">
+                                    Based on pipe size
+                                </div>
+                            </div>
+                            <div style="background: white; padding: 0.5rem; border-radius: 0.25rem; border: 1px solid #e5e7eb;">
+                                <p class="text-xs" style="color: #6b7280;">Per Square Meter</p>
+                                <p style="font-size: 1.125rem; font-weight: bold; color: #8b5cf6;" id="unit-rate-area">SAR 0.00/m²</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem;">
+                        <div style="background-color: #f9fafb; padding: 0.75rem; border-radius: 0.5rem;">
+                            <p class="text-xs font-medium" style="color: #6b7280;">Material Cost</p>
+                            <p style="font-size: 1.125rem; font-weight: bold; color: #1f2937;" id="material-cost">SAR 0.00</p>
+                            <p class="text-xs" style="color: #6b7280; margin-top: 0.25rem;">
+                                <span id="insulation-material-display">Mineral Wool</span> + 
+                                <span id="cladding-material-display">Aluminum</span>
+                            </p>
+                        </div>
+                        <div style="background-color: #f9fafb; padding: 0.75rem; border-radius: 0.5rem;">
+                            <p class="text-xs font-medium" style="color: #6b7280;">Installation Cost</p>
+                            <p style="font-size: 1.125rem; font-weight: bold; color: #1f2937;" id="installation-cost">SAR 0.00</p>
+                            <p class="text-xs" style="color: #6b7280; margin-top: 0.25rem;">
+                                Labor + Equipment + OH
+                            </p>
+                        </div>
+                        <div style="background-color: #f9fafb; padding: 0.75rem; border-radius: 0.5rem;">
+                            <p class="text-xs font-medium" style="color: #6b7280;">Project Margin</p>
+                            <p style="font-size: 1.125rem; font-weight: bold; color: #059669;" id="project-margin">SAR 0.00</p>
+                            <p class="text-xs" style="color: #6b7280; margin-top: 0.25rem;" id="margin-percentage">15% margin</p>
+                        </div>
+                    </div>
+
+                    <div class="info-box info-box-blue mt-3">
+                        <p class="text-xs">
+                            <strong>Calculation Method:</strong> Surface area calculated using pipe diameter + insulation thickness. Material quantities include 10% waste factor. Installation productivity: <span id="productivity-rate">2.5 m²/hour</span> per installer.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BOQ Tab -->
+            <div id="boq-tab" class="tab-content hidden">
+                <div class="card">
+                    <h2 class="card-header">
+                        <span class="header-bar" style="background-color: #f97316;"></span>
+                        Bill of Quantities - <span id="boq-system-type">Pipe Insulation</span> System
+                    </h2>
+                    
+                    <div id="system-type-note" class="info-box info-box-blue mb-3">
+                        <strong>Pipe Insulation System:</strong> Complete material takeoff including insulation, cladding, accessories, and installation consumables.
+                    </div>
+                    
+                    <div style="overflow-x: auto;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Item</th>
+                                    <th>Description</th>
+                                    <th class="text-center">Unit</th>
+                                    <th class="text-center">Quantity</th>
+                                    <th class="text-center">Unit Rate</th>
+                                    <th class="text-right">Total Cost</th>
+                                    <th class="text-center">%</th>
+                                </tr>
+                            </thead>
+                            <tbody id="boq-items">
+                                <!-- BOQ items will be populated here -->
+                            </tbody>
+                            <tfoot>
+                                <tr style="font-weight: bold; background-color: #f3f4f6;">
+                                    <td colspan="5" class="text-right">Total Project Cost:</td>
+                                    <td class="text-right" id="boq-total-cost">SAR 0.00</td>
+                                    <td class="text-center">100%</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Cost Analysis -->
+                <div class="card">
+                    <h2 class="card-header">
+                        <span class="header-bar" style="background-color: #4b5563;"></span>
+                        Cost Analysis & Optimization
+                    </h2>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div>
+                            <h3 style="font-weight: 600; margin-bottom: 0.75rem;">Cost Distribution</h3>
+                            <div style="background-color: #f9fafb; padding: 1rem; border-radius: 0.5rem;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <span>Material Costs:</span>
+                                    <span class="font-semibold" id="cost-breakdown-material">SAR 0.00 (0%)</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <span>Labor Costs:</span>
+                                    <span class="font-semibold" id="cost-breakdown-labor">SAR 0.00 (0%)</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <span>Equipment & Tools:</span>
+                                    <span class="font-semibold" id="cost-breakdown-equipment">SAR 0.00 (0%)</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <span>Overhead:</span>
+                                    <span class="font-semibold" id="cost-breakdown-overhead">SAR 0.00 (0%)</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; padding-top: 0.5rem; border-top: 1px solid #d1d5db; font-weight: bold;">
+                                    <span>Profit Margin:</span>
+                                    <span id="cost-breakdown-profit">SAR 0.00 (0%)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 style="font-weight: 600; margin-bottom: 0.75rem;">Installation Efficiency</h3>
+                            <div style="background-color: #f9fafb; padding: 1rem; border-radius: 0.5rem;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <span>Total Crew Size:</span>
+                                    <span class="font-semibold" id="efficiency-crew-size">0 people</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <span>Project Duration:</span>
+                                    <span class="font-semibold" id="efficiency-duration">0 days</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <span>Daily Progress:</span>
+                                    <span class="font-semibold" id="efficiency-daily">0 m²/day</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <span>Productivity:</span>
+                                    <span class="font-semibold" id="efficiency-productivity">0 m²/hr/person</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; padding-top: 0.5rem; border-top: 1px solid #d1d5db; font-weight: bold;">
+                                    <span>Cost per m²:</span>
+                                    <span id="efficiency-cost-per-m2">SAR 0.00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Workforce Tab -->
+            <div id="workforce-tab" class="tab-content hidden">
+                <div class="card">
+                    <h2 class="card-header">
+                        <span class="header-bar" style="background-color: #4b5563;"></span>
+                        Workforce Requirements & Planning
+                    </h2>
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.5rem;">
+                        <div class="result-card" style="--from-color: #d1fae5; --to-color: #6ee7b7; padding: 1rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                                <span style="font-size: 2rem;">👥</span>
+                                <span style="font-size: 1.5rem; font-weight: bold; color: #1f2937;" id="workforce-total">0</span>
+                            </div>
+                            <p style="font-size: 0.875rem; font-weight: 500; color: #059669;">Total Workforce</p>
+                            <p class="text-xs" style="color: #047857; margin-top: 0.25rem;">All crew categories</p>
+                        </div>
+                        <div class="result-card" style="--from-color: #eff6ff; --to-color: #dbeafe; padding: 1rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                                <span style="font-size: 2rem;">🔧</span>
+                                <span style="font-size: 1.5rem; font-weight: bold; color: #1f2937;" id="workforce-installers">0</span>
+                            </div>
+                            <p style="font-size: 0.875rem; font-weight: 500; color: #2563eb;">Direct Installers</p>
+                            <p class="text-xs" style="color: #1d4ed8; margin-top: 0.25rem;">Supervisor + Lead + Mechanic</p>
+                        </div>
+                        <div class="result-card" style="--from-color: #fff7ed; --to-color: #fed7aa; padding: 1rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                                <span style="font-size: 2rem;">📅</span>
+                                <span style="font-size: 1.5rem; font-weight: bold; color: #1f2937;" id="workforce-duration">0</span>
+                            </div>
+                            <p style="font-size: 0.875rem; font-weight: 500; color: #ea580c;">Duration (Days)</p>
+                            <p class="text-xs" style="color: #c2410c; margin-top: 0.25rem;">10 hrs/day, 6 days/week</p>
+                        </div>
+                        <div class="result-card" style="--from-color: #f3e8ff; --to-color: #e9d5ff; padding: 1rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                                <span style="font-size: 2rem;">💰</span>
+                                <span style="font-size: 1.5rem; font-weight: bold; color: #1f2937;" id="workforce-daily-cost">SAR 0</span>
+                            </div>
+                            <p style="font-size: 0.875rem; font-weight: 500; color: #7c3aed;">Daily Labor Cost</p>
+                            <p class="text-xs" style="color: #6b21a8; margin-top: 0.25rem;">All crew combined</p>
+                        </div>
+                    </div>
+
+                    <!-- Detailed Crew Breakdown -->
+                    <div style="background-color: #f9fafb; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem;">
+                        <h3 style="font-weight: 600; font-size: 1.125rem; margin-bottom: 0.75rem;">Crew Breakdown & Daily Costs</h3>
+                        <div id="crew-breakdown" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+                            <!-- Crew breakdown will be populated here -->
+                        </div>
+                    </div>
+
+                    <!-- Manhour Analysis -->
+                    <div class="card">
+                        <h2 class="card-header">
+                            <span class="header-bar" style="background-color: #10b981;"></span>
+                            Manhour Analysis & Productivity
+                        </h2>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1rem;">
+                            <div style="background-color: #f0fdf4; padding: 0.75rem; border-radius: 0.5rem;">
+                                <p class="text-xs" style="color: #059669;">Total Manhours</p>
+                                <p style="font-size: 1.25rem; font-weight: bold; color: #1f2937;" id="manhour-total">0 hrs</p>
+                                <p class="text-xs" style="color: #047857; margin-top: 0.25rem;">All crew categories combined</p>
+                            </div>
+                            <div style="background-color: #eff6ff; padding: 0.75rem; border-radius: 0.5rem;">
+                                <p class="text-xs" style="color: #2563eb;">Manhours per m²</p>
+                                <p style="font-size: 1.25rem; font-weight: bold; color: #1f2937;" id="manhour-per-m2">0 hrs/m²</p>
+                                <p class="text-xs" style="color: #1d4ed8; margin-top: 0.25rem;">Installation efficiency</p>
+                            </div>
+                            <div style="background-color: #fff7ed; padding: 0.75rem; border-radius: 0.5rem;">
+                                <p class="text-xs" style="color: #ea580c;">Labor Cost per m²</p>
+                                <p style="font-size: 1.25rem; font-weight: bold; color: #1f2937;" id="labor-cost-per-m2">SAR 0.00</p>
+                                <p class="text-xs" style="color: #c2410c; margin-top: 0.25rem;">Direct labor only</p>
+                            </div>
+                        </div>
+
+                        <!-- Productivity Factors -->
+                        <div style="background-color: #f9fafb; padding: 1rem; border-radius: 0.5rem;">
+                            <h4 style="font-weight: 600; margin-bottom: 0.75rem;">Productivity Factors & Considerations</h4>
+                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+                                <div>
+                                    <h5 style="font-weight: 500; font-size: 0.875rem; margin-bottom: 0.5rem; color: #374151;">Installation Complexity</h5>
+                                    <ul style="font-size: 0.75rem; color: #6b7280; list-style-type: disc; margin-left: 1rem;">
+                                        <li>Pipe diameter affects access and handling</li>
+                                        <li>Insulation thickness impacts installation time</li>
+                                        <li>Height/accessibility requires additional safety measures</li>
+                                        <li>Operating temperature affects material selection</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h5 style="font-weight: 500; font-size: 0.875rem; margin-bottom: 0.5rem; color: #374151;">Crew Efficiency Factors</h5>
+                                    <ul style="font-size: 0.75rem; color: #6b7280; list-style-type: disc; margin-left: 1rem;">
+                                        <li>Lead installer supervises 2-3 mechanics</li>
+                                        <li>Helper supports material handling & prep</li>
+                                        <li>Quality control ensures specification compliance</li>
+                                        <li>Safety watch required for hazardous areas</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Tab -->
+            <div id="dashboard-tab" class="tab-content hidden">
+                <div class="card">
+                    <h2 class="card-header">
+                        <span class="header-bar" style="background-color: #f97316;"></span>
+                        Project Summary Dashboard
+                    </h2>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.5rem;">
+                        <div class="result-card" style="--from-color: #f3f4f6; --to-color: #e5e7eb; padding: 1rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                <span>📊</span>
+                                <span class="text-xs font-medium" style="color: #6b7280; background-color: #f3f4f6; padding: 0.25rem 0.5rem; border-radius: 0.25rem;">Total</span>
+                            </div>
+                            <p style="font-size: 1.25rem; font-weight: bold; color: #1f2937;" id="dashboard-total-cost">SAR 0.00</p>
+                            <p class="text-xs" style="color: #6b7280; margin-top: 0.25rem;">Project value</p>
+                        </div>
+
+                        <div class="result-card" style="--from-color: #eff6ff; --to-color: #dbeafe; padding: 1rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                <span>📏</span>
+                                <span class="text-xs font-medium" style="color: #2563eb; background-color: #dbeafe; padding: 0.25rem 0.5rem; border-radius: 0.25rem;">Linear</span>
+                            </div>
+                            <p style="font-size: 1.25rem; font-weight: bold; color: #1f2937;" id="dashboard-linear-rate">SAR 0.00</p>
+                            <p class="text-xs" style="color: #6b7280; margin-top: 0.25rem;">per meter</p>
+                        </div>
+
+                        <div class="result-card" style="--from-color: #f0fdf4; --to-color: #d1fae5; padding: 1rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                <span>⚙️</span>
+                                <span class="text-xs font-medium" style="color: #059669; background-color: #d1fae5; padding: 0.25rem 0.5rem; border-radius: 0.25rem;">Valve</span>
+                            </div>
+                            <p style="font-size: 1.25rem; font-weight: bold; color: #1f2937;" id="dashboard-valve-rate">SAR 0.00</p>
+                            <p class="text-xs" style="color: #6b7280; margin-top: 0.25rem;">per valve</p>
+                        </div>
+
+                        <div class="result-card" style="--from-color: #fff7ed; --to-color: #fed7aa; padding: 1rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                <span>👥</span>
+                                <span class="text-xs font-medium" style="color: #ea580c; background-color: #fed7aa; padding: 0.25rem 0.5rem; border-radius: 0.25rem;">Crew</span>
+                            </div>
+                            <p style="font-size: 1.25rem; font-weight: bold; color: #1f2937;" id="dashboard-crew-size">0</p>
+                            <p class="text-xs" style="color: #6b7280; margin-top: 0.25rem;">total workforce</p>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                        <div style="background-color: #f9fafb; padding: 1rem; border-radius: 0.5rem;">
+                            <h3 style="font-weight: bold; font-size: 1.125rem; margin-bottom: 0.75rem; color: #1f2937;">Project Specifications</h3>
+                            <div id="dashboard-specs" style="font-size: 0.875rem;">
+                                <!-- Project specs will be populated here -->
+                            </div>
+                        </div>
+
+                        <div style="background-color: #f9fafb; padding: 1rem; border-radius: 0.5rem;">
+                            <h3 style="font-weight: bold; font-size: 1.125rem; margin-bottom: 0.75rem; color: #1f2937;">Cost Summary</h3>
+                            <div id="dashboard-cost-summary" style="font-size: 0.875rem;">
+                                <!-- Cost summary will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reports Tab -->
+            <div id="reports-tab" class="tab-content hidden">
+                <div class="card">
+                    <h2 class="card-header">
+                        <span class="header-bar" style="background-color: #4b5563;"></span>
+                        Report Generation
+                    </h2>
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <label class="form-label" style="margin-bottom: 0;">Report Serial:</label>
+                            <input type="text" class="form-input" id="reportSerial" style="width: 200px;" placeholder="Auto-generated" readonly>
+                            <button class="btn btn-secondary btn-sm" onclick="generateSerial()">
+                                <span>↻</span> New
+                            </button>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <label class="form-label" style="margin-bottom: 0;">Type:</label>
+                            <select class="form-select" id="reportType" style="width: 150px;">
+                                <option value="internal">Internal Report</option>
+                                <option value="quotation">Client Quotation</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div style="background: linear-gradient(to right, #f9fafb, #f3f4f6); padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem;">
+                        <h3 style="font-weight: 600; font-size: 1.125rem; margin-bottom: 0.75rem;">Report Preview</h3>
+                        <div style="background: white; padding: 1rem; border-radius: 0.5rem; border: 1px solid #e5e7eb; min-height: 200px;">
+                            <div id="report-preview">
+                                <div style="text-align: center; margin-bottom: 20px;">
+                                    <h3 style="font-size: 1.25rem; font-weight: bold;">Industrial Insulation & Cladding</h3>
+                                    <p style="font-size: 0.875rem; color: #6b7280;">Estimation Report</p>
+                                    <p style="font-size: 0.75rem; color: #6b7280;">Report will be generated here...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 0.75rem;">
+                        <button class="btn btn-secondary" onclick="generateReport()">
+                            <span>📄</span> Generate PDF
+                        </button>
+                        <button class="btn btn-primary" onclick="exportToExcel()">
+                            <span>📊</span> Export Excel
+                        </button>
+                        <button class="btn btn-secondary" onclick="emailReport()">
+                            <span>✉️</span> Email
+                        </button>
+                        <button class="btn btn-secondary" onclick="printReport()">
+                            <span>🖨️</span> Print
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div id="settings-tab" class="tab-content hidden">
+                <!-- Company Settings -->
+                <div class="card">
+                    <h2 class="card-header">
+                        <span class="header-bar" style="background-color: #f97316;"></span>
+                        Company Settings & Project Rates
+                    </h2>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+                        <div class="form-group">
+                            <label class="form-label">Company Name</label>
+                            <input type="text" class="form-input" id="companyName" value="Industrial Contracting Co.">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Company Email</label>
+                            <input type="email" class="form-input" id="companyEmail" value="info@industrial-contracting.com">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Equipment & Tools Rate (SAR/day)</label>
+                            <input type="number" class="form-input" id="equipmentRate" value="1200" onchange="calculateAll()">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Transport Rate (SAR/day)</label>
+                            <input type="number" class="form-input" id="transportRate" value="800" onchange="calculateAll()">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Overhead Percentage (%)</label>
+                            <input type="number" class="form-input" id="overheadPercentage" value="12" onchange="calculateAll()">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Profit Margin (%)</label>
+                            <input type="number" class="form-input" id="profitMargin" value="15" onchange="calculateAll()">
+                        </div>
+                    </div>
+
+                    <div class="info-box info-box-blue mt-4">
+                        <h3 class="text-sm font-semibold mb-2" style="color: #1e40af;">💡 Cost Calculation Formula</h3>
+                        <div class="text-xs" style="color: #1e40af;">
+                            <p>1. <strong>Material Costs</strong> = Insulation + Cladding + Accessories (with waste factor)</p>
+                            <p>2. <strong>Labor Costs</strong> = Crew Hours × Hourly Rates</p>
+                            <p>3. <strong>Direct Costs</strong> = Material + Labor + Equipment + Transport</p>
+                            <p>4. <strong>Overhead</strong> = Direct Costs × Overhead %</p>
+                            <p>5. <strong>Total Cost</strong> = (Direct Costs + Overhead) × (1 + Profit %)</p>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-secondary mt-4" onclick="saveSettings()">Save Settings</button>
+                </div>
+
+                <!-- Material Price Management -->
+                <div class="card">
+                    <h2 class="card-header">
+                        <span class="header-bar" style="background-color: #10b981;"></span>
+                        Material Price Management
+                    </h2>
+                    
+                    <!-- Material Management Actions -->
+                    <div style="display: flex; gap: 0.75rem; margin-bottom: 1rem; align-items: center;">
+                        <button class="btn btn-primary" onclick="showAddMaterialModal('insulation')">
+                            <span>➕</span> Add Insulation Material
+                        </button>
+                        <button class="btn btn-primary" onclick="showAddMaterialModal('cladding')">
+                            <span>➕</span> Add Cladding Material
+                        </button>
+                        <button class="btn btn-secondary" onclick="exportMaterialPrices()">
+                            <span>📤</span> Export Prices
+                        </button>
+                        <button class="btn btn-secondary" onclick="importMaterialPrices()">
+                            <span>📥</span> Import Prices
+                        </button>
+                        <input type="file" id="material-import-file" accept=".json,.csv" style="display: none;" onchange="handleMaterialImport(event)">
+                    </div>
+
+                    <!-- Insulation Materials -->
+                    <div style="margin-bottom: 2rem;">
+                        <h3 style="font-weight: 600; font-size: 1.125rem; margin-bottom: 0.75rem; color: #1f2937;">
+                            🧱 Insulation Materials
+                        </h3>
+                        <div style="overflow-x: auto;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Material Name</th>
+                                        <th class="text-center">Rate (SAR)</th>
+                                        <th class="text-center">Unit</th>
+                                        <th class="text-center">Density (kg/m³)</th>
+                                        <th class="text-center">Last Updated</th>
+                                        <th class="text-center">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="insulation-materials-table">
+                                    <!-- Insulation materials will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Cladding Materials -->
+                    <div>
+                        <h3 style="font-weight: 600; font-size: 1.125rem; margin-bottom: 0.75rem; color: #1f2937;">
+                            🛡️ Cladding Materials
+                        </h3>
+                        <div style="overflow-x: auto;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Material Name</th>
+                                        <th class="text-center">Rate (SAR)</th>
+                                        <th class="text-center">Unit</th>
+                                        <th class="text-center">Thickness (mm)</th>
+                                        <th class="text-center">Last Updated</th>
+                                        <th class="text-center">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="cladding-materials-table">
+                                    <!-- Cladding materials will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Price History Note -->
+                    <div class="info-box info-box-green mt-4">
+                        <p class="text-xs">
+                            <strong>💡 Material Price Tips:</strong> 
+                            • Prices are automatically saved to browser storage
+                            • Export your price list for backup and sharing with team
+                            • Import prices from Excel/CSV for bulk updates
+                            • Material prices include supplier delivery to site
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Material Modal -->
+            <div id="add-material-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center;">
+                <div style="background: white; border-radius: 0.5rem; padding: 1.5rem; max-width: 500px; width: 90%; max-height: 80vh; overflow-y: auto;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h3 style="font-size: 1.25rem; font-weight: bold;" id="modal-title">Add New Material</h3>
+                        <button onclick="closeAddMaterialModal()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">×</button>
+                    </div>
+                    
+                    <form id="add-material-form" onsubmit="addNewMaterial(event)">
+                        <input type="hidden" id="material-type-input">
+                        
+                        <div class="form-group">
+                            <label class="form-label">Material Name *</label>
+                            <input type="text" class="form-input" id="material-name-input" placeholder="e.g., Rock Wool High Temp" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Display Name *</label>
+                            <input type="text" class="form-input" id="material-display-input" placeholder="e.g., Rock Wool HT" required>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                            <div class="form-group">
+                                <label class="form-label">Rate (SAR) *</label>
+                                <input type="number" step="0.01" class="form-input" id="material-rate-input" placeholder="0.00" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Unit</label>
+                                <input type="text" class="form-input" id="material-unit-input" value="m³" readonly>
+                            </div>
+                        </div>
+                        
+                        <div id="insulation-specific-fields">
+                            <div class="form-group">
+                                <label class="form-label">Density (kg/m³)</label>
+                                <input type="number" class="form-input" id="material-density-input" placeholder="120">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Max Operating Temperature (°C)</label>
+                                <input type="number" class="form-input" id="material-max-temp-input" placeholder="150">
+                            </div>
+                        </div>
+                        
+                        <div id="cladding-specific-fields" style="display: none;">
+                            <div class="form-group">
+                                <label class="form-label">Thickness (mm)</label>
+                                <input type="number" step="0.1" class="form-input" id="material-thickness-input" placeholder="0.5">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Material Grade</label>
+                                <input type="text" class="form-input" id="material-grade-input" placeholder="e.g., 5005-H14">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Supplier</label>
+                            <input type="text" class="form-input" id="material-supplier-input" placeholder="Supplier name (optional)">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Notes</label>
+                            <textarea class="form-input" id="material-notes-input" rows="3" placeholder="Additional notes, specifications, or usage guidelines"></textarea>
+                        </div>
+                        
+                        <div style="display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1.5rem;">
+                            <button type="button" class="btn btn-secondary" onclick="closeAddMaterialModal()">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Add Material</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Edit Material Modal -->
+            <div id="edit-material-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center;">
+                <div style="background: white; border-radius: 0.5rem; padding: 1.5rem; max-width: 500px; width: 90%; max-height: 80vh; overflow-y: auto;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h3 style="font-size: 1.25rem; font-weight: bold;">Edit Material</h3>
+                        <button onclick="closeEditMaterialModal()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">×</button>
+                    </div>
+                    
+                    <form id="edit-material-form" onsubmit="updateMaterial(event)">
+                        <input type="hidden" id="edit-material-key">
+                        <input type="hidden" id="edit-material-type">
+                        
+                        <div class="form-group">
+                            <label class="form-label">Material Name</label>
+                            <input type="text" class="form-input" id="edit-material-display" required>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                            <div class="form-group">
+                                <label class="form-label">Rate (SAR) *</label>
+                                <input type="number" step="0.01" class="form-input" id="edit-material-rate" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Unit</label>
+                                <input type="text" class="form-input" id="edit-material-unit" readonly>
+                            </div>
+                        </div>
+                        
+                        <div id="edit-insulation-fields">
+                            <div class="form-group">
+                                <label class="form-label">Density (kg/m³)</label>
+                                <input type="number" class="form-input" id="edit-material-density">
+                            </div>
+                        </div>
+                        
+                        <div id="edit-cladding-fields" style="display: none;">
+                            <div class="form-group">
+                                <label class="form-label">Thickness (mm)</label>
+                                <input type="number" step="0.1" class="form-input" id="edit-material-thickness">
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1.5rem;">
+                            <button type="button" class="btn btn-secondary" onclick="closeEditMaterialModal()">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Update Material</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Global state
+        let state = {
+            activeTab: 'calculator',
+            insulationType: 'pipe',
+            projectInfo: {
+                clientName: '',
+                projectName: '',
+                location: '',
+                date: new Date().toISOString().split('T')[0],
+                operatingTemp: 150,
+                projectDuration: 30
+            },
+            specifications: {
+                pipeDiameter: '',
+                pipeLength: 0,
+                insulationThickness: 50,
+                valveCount: 0,
+                insulationMaterial: 'mineral_wool',
+                claddingMaterial: 'aluminum'
+            },
+            crewRates: {
+                supervisor: { enabled: true, rate: 55, quantity: 1 },
+                leadInsulator: { enabled: true, rate: 45, quantity: 2 },
+                mechanic: { enabled: true, rate: 38, quantity: 4 },
+                helper: { enabled: true, rate: 25, quantity: 2 },
+                safetyWatch: { enabled: true, rate: 35, quantity: 1 },
+                scaffolding: { enabled: false, rate: 40, quantity: 2 },
+                equipment: { enabled: false, rate: 50, quantity: 1 },
+                qualityControl: { enabled: true, rate: 60, quantity: 1 }
+            },
+            settings: {
+                equipmentRate: 1200,
+                transportRate: 800,
+                overheadPercentage: 12,
+                profitMargin: 15
+            },
+            calculations: {},
+            reportSerial: ''
+        };
+
+        // Material rates (SAR per unit) - now managed dynamically
+        let materialRates = {
+            insulation: {
+                mineral_wool: { 
+                    rate: 45, 
+                    unit: 'm³', 
+                    density: 120, 
+                    displayName: 'Mineral Wool',
+                    maxTemp: 750,
+                    supplier: 'Default',
+                    lastUpdated: new Date().toISOString(),
+                    notes: 'Standard mineral wool insulation'
+                },
+                fiberglass: { 
+                    rate: 38, 
+                    unit: 'm³', 
+                    density: 100,
+                    displayName: 'Fiberglass',
+                    maxTemp: 450,
+                    supplier: 'Default',
+                    lastUpdated: new Date().toISOString(),
+                    notes: 'Glass fiber insulation'
+                },
+                elastomeric: { 
+                    rate: 85, 
+                    unit: 'm³', 
+                    density: 70,
+                    displayName: 'Elastomeric Foam',
+                    maxTemp: 105,
+                    supplier: 'Default',
+                    lastUpdated: new Date().toISOString(),
+                    notes: 'Flexible foam insulation'
+                },
+                calcium_silicate: { 
+                    rate: 65, 
+                    unit: 'm³', 
+                    density: 200,
+                    displayName: 'Calcium Silicate',
+                    maxTemp: 1000,
+                    supplier: 'Default',
+                    lastUpdated: new Date().toISOString(),
+                    notes: 'High temperature board insulation'
+                }
+            },
+            cladding: {
+                aluminum: { 
+                    rate: 25, 
+                    unit: 'm²', 
+                    thickness: 0.5,
+                    displayName: 'Aluminum 0.5mm',
+                    grade: '5005-H14',
+                    supplier: 'Default',
+                    lastUpdated: new Date().toISOString(),
+                    notes: 'Standard aluminum cladding'
+                },
+                stainless_steel: { 
+                    rate: 45, 
+                    unit: 'm²', 
+                    thickness: 0.5,
+                    displayName: 'Stainless Steel 0.5mm',
+                    grade: '304',
+                    supplier: 'Default',
+                    lastUpdated: new Date().toISOString(),
+                    notes: 'Corrosion resistant cladding'
+                },
+                pvc: { 
+                    rate: 15, 
+                    unit: 'm²', 
+                    thickness: 1.0,
+                    displayName: 'PVC Coating',
+                    grade: 'UV Stabilized',
+                    supplier: 'Default',
+                    lastUpdated: new Date().toISOString(),
+                    notes: 'Weather resistant coating'
+                },
+                galvanized: { 
+                    rate: 20, 
+                    unit: 'm²', 
+                    thickness: 0.5,
+                    displayName: 'Galvanized Steel',
+                    grade: 'Z275',
+                    supplier: 'Default',
+                    lastUpdated: new Date().toISOString(),
+                    notes: 'Hot-dip galvanized cladding'
+                }
+            }
+        };
+
+        // Productivity rates (m² per hour per person)
+        const productivityRates = {
+            pipe: {
+                small: 2.5,  // up to 6"
+                medium: 2.0, // 8" to 16"
+                large: 1.5   // 18" and above
+            },
+            valve: {
+                small: 0.8,  // per valve per hour
+                medium: 0.6,
+                large: 0.4
+            }
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('date').value = new Date().toISOString().split('T')[0];
+            generateSerial();
+            loadMaterialsFromStorage();
+            populateMaterialDropdowns();
+            populateMaterialTables();
+            calculateAll();
+        });
+
+        // Material Management Functions
+        function loadMaterialsFromStorage() {
+            const savedMaterials = localStorage.getItem('industrialInsulationMaterials');
+            if (savedMaterials) {
+                materialRates = JSON.parse(savedMaterials);
+            }
+        }
+
+        function saveMaterialsToStorage() {
+            localStorage.setItem('industrialInsulationMaterials', JSON.stringify(materialRates));
+        }
+
+        function populateMaterialDropdowns() {
+            // Update insulation material dropdown
+            const insulationSelect = document.getElementById('insulationMaterial');
+            const currentInsulation = insulationSelect.value;
+            insulationSelect.innerHTML = '';
+            
+            Object.entries(materialRates.insulation).forEach(([key, material]) => {
+                const option = document.createElement('option');
+                option.value = key;
+                option.textContent = material.displayName;
+                insulationSelect.appendChild(option);
+            });
+            
+            // Restore selection if it still exists
+            if (materialRates.insulation[currentInsulation]) {
+                insulationSelect.value = currentInsulation;
+            }
+            
+            // Update cladding material dropdown
+            const claddingSelect = document.getElementById('claddingMaterial');
+            const currentCladding = claddingSelect.value;
+            claddingSelect.innerHTML = '';
+            
+            Object.entries(materialRates.cladding).forEach(([key, material]) => {
+                const option = document.createElement('option');
+                option.value = key;
+                option.textContent = material.displayName;
+                claddingSelect.appendChild(option);
+            });
+            
+            // Restore selection if it still exists
+            if (materialRates.cladding[currentCladding]) {
+                claddingSelect.value = currentCladding;
+            }
+        }
+
+        function populateMaterialTables() {
+            // Populate insulation materials table
+            const insulationTableBody = document.getElementById('insulation-materials-table');
+            insulationTableBody.innerHTML = '';
+            
+            Object.entries(materialRates.insulation).forEach(([key, material]) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td style="font-weight: 500;">${material.displayName}</td>
+                    <td class="text-center">
+                        <input type="number" step="0.01" value="${material.rate}" 
+                               onchange="updateMaterialPrice('insulation', '${key}', this.value)"
+                               style="width: 80px; padding: 0.25rem; text-align: center; border: 1px solid #d1d5db; border-radius: 0.25rem;">
+                    </td>
+                    <td class="text-center">${material.unit}</td>
+                    <td class="text-center">${material.density || 'N/A'}</td>
+                    <td class="text-center" style="font-size: 0.75rem;">${new Date(material.lastUpdated).toLocaleDateString()}</td>
+                    <td class="text-center">
+                        <button onclick="editMaterial('insulation', '${key}')" class="btn btn-sm" style="background-color: #3b82f6; color: white; padding: 0.25rem 0.5rem; margin-right: 0.25rem;">Edit</button>
+                        <button onclick="deleteMaterial('insulation', '${key}')" class="btn btn-sm" style="background-color: #ef4444; color: white; padding: 0.25rem 0.5rem;">Delete</button>
+                    </td>
+                `;
+                insulationTableBody.appendChild(row);
+            });
+            
+            // Populate cladding materials table
+            const claddingTableBody = document.getElementById('cladding-materials-table');
+            claddingTableBody.innerHTML = '';
+            
+            Object.entries(materialRates.cladding).forEach(([key, material]) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td style="font-weight: 500;">${material.displayName}</td>
+                    <td class="text-center">
+                        <input type="number" step="0.01" value="${material.rate}" 
+                               onchange="updateMaterialPrice('cladding', '${key}', this.value)"
+                               style="width: 80px; padding: 0.25rem; text-align: center; border: 1px solid #d1d5db; border-radius: 0.25rem;">
+                    </td>
+                    <td class="text-center">${material.unit}</td>
+                    <td class="text-center">${material.thickness || 'N/A'}</td>
+                    <td class="text-center" style="font-size: 0.75rem;">${new Date(material.lastUpdated).toLocaleDateString()}</td>
+                    <td class="text-center">
+                        <button onclick="editMaterial('cladding', '${key}')" class="btn btn-sm" style="background-color: #3b82f6; color: white; padding: 0.25rem 0.5rem; margin-right: 0.25rem;">Edit</button>
+                        <button onclick="deleteMaterial('cladding', '${key}')" class="btn btn-sm" style="background-color: #ef4444; color: white; padding: 0.25rem 0.5rem;">Delete</button>
+                    </td>
+                `;
+                claddingTableBody.appendChild(row);
+            });
+        }
+
+        function updateMaterialPrice(type, key, newPrice) {
+            const price = parseFloat(newPrice);
+            if (price > 0) {
+                materialRates[type][key].rate = price;
+                materialRates[type][key].lastUpdated = new Date().toISOString();
+                saveMaterialsToStorage();
+                calculateAll(); // Recalculate with new price
+            }
+        }
+
+        function showAddMaterialModal(type) {
+            const modal = document.getElementById('add-material-modal');
+            const title = document.getElementById('modal-title');
+            const typeInput = document.getElementById('material-type-input');
+            const unitInput = document.getElementById('material-unit-input');
+            const insulationFields = document.getElementById('insulation-specific-fields');
+            const claddingFields = document.getElementById('cladding-specific-fields');
+            
+            title.textContent = `Add New ${type.charAt(0).toUpperCase() + type.slice(1)} Material`;
+            typeInput.value = type;
+            
+            // Clear form
+            document.getElementById('add-material-form').reset();
+            
+            if (type === 'insulation') {
+                unitInput.value = 'm³';
+                insulationFields.style.display = 'block';
+                claddingFields.style.display = 'none';
+            } else {
+                unitInput.value = 'm²';
+                insulationFields.style.display = 'none';
+                claddingFields.style.display = 'block';
+            }
+            
+            modal.style.display = 'flex';
+        }
+
+        function closeAddMaterialModal() {
+            document.getElementById('add-material-modal').style.display = 'none';
+        }
+
+        function addNewMaterial(event) {
+            event.preventDefault();
+            
+            const type = document.getElementById('material-type-input').value;
+            const name = document.getElementById('material-name-input').value.trim();
+            const displayName = document.getElementById('material-display-input').value.trim();
+            const rate = parseFloat(document.getElementById('material-rate-input').value);
+            const unit = document.getElementById('material-unit-input').value;
+            const supplier = document.getElementById('material-supplier-input').value.trim() || 'Custom';
+            const notes = document.getElementById('material-notes-input').value.trim();
+            
+            // Generate key from name
+            const key = name.toLowerCase().replace(/[^a-z0-9]/g, '_');
+            
+            // Check if material already exists
+            if (materialRates[type][key]) {
+                alert('A material with this name already exists. Please use a different name.');
+                return;
+            }
+            
+            // Create material object
+            const material = {
+                rate: rate,
+                unit: unit,
+                displayName: displayName,
+                supplier: supplier,
+                lastUpdated: new Date().toISOString(),
+                notes: notes
+            };
+            
+            if (type === 'insulation') {
+                material.density = parseInt(document.getElementById('material-density-input').value) || 100;
+                material.maxTemp = parseInt(document.getElementById('material-max-temp-input').value) || 150;
+            } else {
+                material.thickness = parseFloat(document.getElementById('material-thickness-input').value) || 0.5;
+                material.grade = document.getElementById('material-grade-input').value.trim() || 'Standard';
+            }
+            
+            // Add to materials
+            materialRates[type][key] = material;
+            
+            // Save and update
+            saveMaterialsToStorage();
+            populateMaterialDropdowns();
+            populateMaterialTables();
+            calculateAll();
+            
+            closeAddMaterialModal();
+            
+            alert(`${displayName} has been added successfully!`);
+        }
+
+        function editMaterial(type, key) {
+            const material = materialRates[type][key];
+            if (!material) return;
+            
+            const modal = document.getElementById('edit-material-modal');
+            
+            // Populate form
+            document.getElementById('edit-material-key').value = key;
+            document.getElementById('edit-material-type').value = type;
+            document.getElementById('edit-material-display').value = material.displayName;
+            document.getElementById('edit-material-rate').value = material.rate;
+            document.getElementById('edit-material-unit').value = material.unit;
+            
+            const insulationFields = document.getElementById('edit-insulation-fields');
+            const claddingFields = document.getElementById('edit-cladding-fields');
+            
+            if (type === 'insulation') {
+                document.getElementById('edit-material-density').value = material.density || '';
+                insulationFields.style.display = 'block';
+                claddingFields.style.display = 'none';
+            } else {
+                document.getElementById('edit-material-thickness').value = material.thickness || '';
+                insulationFields.style.display = 'none';
+                claddingFields.style.display = 'block';
+            }
+            
+            modal.style.display = 'flex';
+        }
+
+        function closeEditMaterialModal() {
+            document.getElementById('edit-material-modal').style.display = 'none';
+        }
+
+        function updateMaterial(event) {
+            event.preventDefault();
+            
+            const key = document.getElementById('edit-material-key').value;
+            const type = document.getElementById('edit-material-type').value;
+            const displayName = document.getElementById('edit-material-display').value.trim();
+            const rate = parseFloat(document.getElementById('edit-material-rate').value);
+            
+            const material = materialRates[type][key];
+            material.displayName = displayName;
+            material.rate = rate;
+            material.lastUpdated = new Date().toISOString();
+            
+            if (type === 'insulation') {
+                material.density = parseInt(document.getElementById('edit-material-density').value) || material.density;
+            } else {
+                material.thickness = parseFloat(document.getElementById('edit-material-thickness').value) || material.thickness;
+            }
+            
+            saveMaterialsToStorage();
+            populateMaterialDropdowns();
+            populateMaterialTables();
+            calculateAll();
+            
+            closeEditMaterialModal();
+            
+            alert(`Material updated successfully!`);
+        }
+
+        function deleteMaterial(type, key) {
+            const material = materialRates[type][key];
+            if (!material) return;
+            
+            if (confirm(`Are you sure you want to delete "${material.displayName}"? This action cannot be undone.`)) {
+                delete materialRates[type][key];
+                saveMaterialsToStorage();
+                populateMaterialDropdowns();
+                populateMaterialTables();
+                calculateAll();
+                
+                alert(`"${material.displayName}" has been deleted.`);
+            }
+        }
+
+        function exportMaterialPrices() {
+            const exportData = {
+                exportDate: new Date().toISOString(),
+                version: '1.0',
+                materials: materialRates
+            };
+            
+            const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `material-prices-${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function importMaterialPrices() {
+            document.getElementById('material-import-file').click();
+        }
+
+        function handleMaterialImport(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    
+                    if (data.materials && data.materials.insulation && data.materials.cladding) {
+                        if (confirm('This will replace all current material prices. Are you sure?')) {
+                            materialRates = data.materials;
+                            saveMaterialsToStorage();
+                            populateMaterialDropdowns();
+                            populateMaterialTables();
+                            calculateAll();
+                            
+                            alert('Material prices imported successfully!');
+                        }
+                    } else {
+                        alert('Invalid file format. Please select a valid material prices file.');
+                    }
+                } catch (error) {
+                    alert('Error reading file: ' + error.message);
+                }
+            };
+            reader.readAsText(file);
+            
+            // Reset file input
+            event.target.value = '';
+        }
+
+        // Debounce function
+        let debounceTimer;
+        function debounceCalculate() {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                calculateAll();
+            }, 500);
+        }
+
+        // Tab switching
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.add('hidden');
+            });
+            
+            document.getElementById(`${tabName}-tab`).classList.remove('hidden');
+            
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.closest('.tab-button').classList.add('active');
+            
+            state.activeTab = tabName;
+            
+            if (tabName === 'dashboard') {
+                updateDashboard();
+            }
+        }
+
+        // Insulation type selection
+        function selectInsulationType(type) {
+            state.insulationType = type;
+            
+            document.querySelectorAll('.insulation-type-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-type="${type}"]`).classList.add('active');
+            
+            // Update UI based on type
+            const pipeGroups = ['pipe-diameter-group', 'pipe-length-group'];
+            const valveGroup = document.getElementById('valve-count-group');
+            const systemNote = document.getElementById('system-note');
+            
+            if (type === 'pipe') {
+                pipeGroups.forEach(id => document.getElementById(id).style.display = 'block');
+                valveGroup.style.display = 'none';
+                systemNote.innerHTML = '<strong>Pipe Insulation:</strong> Calculate material quantities and installation costs for straight pipe runs. Includes fittings and accessories.';
+                systemNote.className = 'info-box info-box-blue mt-3';
+            } else if (type === 'valve') {
+                pipeGroups.forEach(id => document.getElementById(id).style.display = 'none');
+                valveGroup.style.display = 'block';
+                systemNote.innerHTML = '<strong>Valve Insulation:</strong> Specialized insulation for valves and fittings. Includes removable covers and access panels.';
+                systemNote.className = 'info-box info-box-green mt-3';
+            } else if (type === 'equipment') {
+                pipeGroups.forEach(id => document.getElementById(id).style.display = 'block');
+                valveGroup.style.display = 'none';
+                systemNote.innerHTML = '<strong>Equipment Insulation:</strong> Tanks, vessels, and equipment insulation. Calculate using equivalent pipe length method.';
+                systemNote.className = 'info-box info-box-orange mt-3';
+            } else if (type === 'mixed') {
+                pipeGroups.forEach(id => document.getElementById(id).style.display = 'block');
+                valveGroup.style.display = 'block';
+                systemNote.innerHTML = '<strong>Mixed System:</strong> Combined pipe and valve insulation project. Specify both linear pipe length and valve quantities.';
+                systemNote.className = 'info-box info-box-yellow mt-3';
+            }
+            
+            calculateAll();
+        }
+
+        // Main calculation function
+        function calculateAll() {
+            updateStateFromInputs();
+            
+            const calc = calculateInsulationSystem();
+            state.calculations = calc;
+            
+            updateResults();
+            updateBOQ();
+            updateWorkforce();
+        }
+
+        // Update state from form inputs
+        function updateStateFromInputs() {
+            // Project info
+            state.projectInfo.clientName = document.getElementById('clientName').value;
+            state.projectInfo.projectName = document.getElementById('projectName').value;
+            state.projectInfo.location = document.getElementById('location').value;
+            state.projectInfo.date = document.getElementById('date').value;
+            state.projectInfo.operatingTemp = parseFloat(document.getElementById('operatingTemp').value) || 150;
+            state.projectInfo.projectDuration = parseInt(document.getElementById('projectDuration').value) || 30;
+            
+            // Specifications
+            state.specifications.pipeDiameter = document.getElementById('pipeDiameter').value;
+            state.specifications.pipeLength = parseFloat(document.getElementById('pipeLength').value) || 0;
+            state.specifications.insulationThickness = parseInt(document.getElementById('insulationThickness').value) || 50;
+            state.specifications.valveCount = parseInt(document.getElementById('valveCount').value) || 0;
+            state.specifications.insulationMaterial = document.getElementById('insulationMaterial').value;
+            state.specifications.claddingMaterial = document.getElementById('claddingMaterial').value;
+            
+            // Crew rates
+            Object.keys(state.crewRates).forEach(role => {
+                state.crewRates[role].enabled = document.getElementById(`${role}-enabled`).checked;
+                state.crewRates[role].rate = parseFloat(document.getElementById(`${role}-rate`).value) || 0;
+                state.crewRates[role].quantity = parseInt(document.getElementById(`${role}-qty`).value) || 0;
+            });
+            
+            // Settings
+            state.settings.equipmentRate = parseFloat(document.getElementById('equipmentRate').value) || 1200;
+            state.settings.transportRate = parseFloat(document.getElementById('transportRate').value) || 800;
+            state.settings.overheadPercentage = parseFloat(document.getElementById('overheadPercentage').value) || 12;
+            state.settings.profitMargin = parseFloat(document.getElementById('profitMargin').value) || 15;
+        }
+
+        // Calculate insulation system
+        function calculateInsulationSystem() {
+            const specs = state.specifications;
+            const pipeDiameter = parseFloat(specs.pipeDiameter) || 0;
+            const pipeLength = specs.pipeLength;
+            const insulationThickness = specs.insulationThickness / 1000; // Convert mm to m
+            const valveCount = specs.valveCount;
+            
+            // Calculate surface areas
+            let pipeSurfaceArea = 0;
+            let valveSurfaceArea = 0;
+            let totalInsulationVolume = 0;
+            let totalCladdingArea = 0;
+            
+            if (state.insulationType === 'pipe' || state.insulationType === 'mixed' || state.insulationType === 'equipment') {
+                if (pipeDiameter > 0 && pipeLength > 0) {
+                    const pipeRadius = (pipeDiameter * 0.0254) / 2; // Convert inches to meters
+                    const insulatedRadius = pipeRadius + insulationThickness;
+                    
+                    // Surface area of insulated pipe
+                    pipeSurfaceArea = 2 * Math.PI * insulatedRadius * pipeLength;
+                    
+                    // Insulation volume (annular volume)
+                    const pipeInsulationVolume = Math.PI * (Math.pow(insulatedRadius, 2) - Math.pow(pipeRadius, 2)) * pipeLength;
+                    totalInsulationVolume += pipeInsulationVolume;
+                    
+                    // Cladding area (same as surface area)
+                    totalCladdingArea += pipeSurfaceArea;
+                }
+            }
+            
+            if (state.insulationType === 'valve' || state.insulationType === 'mixed') {
+                if (valveCount > 0 && pipeDiameter > 0) {
+                    // Estimate valve surface area based on pipe diameter
+                    const valveAreaFactor = pipeDiameter <= 6 ? 0.8 : pipeDiameter <= 12 ? 1.2 : 1.8;
+                    valveSurfaceArea = valveCount * valveAreaFactor;
+                    
+                    // Valve insulation volume (approximation)
+                    const valveInsulationVolume = valveSurfaceArea * insulationThickness;
+                    totalInsulationVolume += valveInsulationVolume;
+                    
+                    totalCladdingArea += valveSurfaceArea;
+                }
+            }
+            
+            const totalSurfaceArea = pipeSurfaceArea + valveSurfaceArea;
+            
+            // Calculate material costs
+            const insulationMaterial = materialRates.insulation[specs.insulationMaterial];
+            const claddingMaterial = materialRates.cladding[specs.claddingMaterial];
+            
+            if (!insulationMaterial || !claddingMaterial) {
+                console.warn('Material not found in rates');
+                return {
+                    pipeSurfaceArea: 0,
+                    valveSurfaceArea: 0,
+                    totalSurfaceArea: 0,
+                    totalInsulationVolume: 0,
+                    totalCladdingArea: 0,
+                    insulationCost: 0,
+                    claddingCost: 0,
+                    accessoriesCost: 0,
+                    totalMaterialCost: 0,
+                    totalLaborCost: 0,
+                    dailyLaborCost: 0,
+                    equipmentCost: 0,
+                    transportCost: 0,
+                    directCosts: 0,
+                    overheadCost: 0,
+                    subtotal: 0,
+                    profitAmount: 0,
+                    totalCost: 0,
+                    totalManhours: 0,
+                    totalCrewSize: 0,
+                    projectDays: 30,
+                    productivity: 2.0,
+                    unitRateLinear: 0,
+                    unitRateValve: 0,
+                    unitRateArea: 0
+                };
+            }
+            
+            const insulationCost = totalInsulationVolume * insulationMaterial.rate * 1.1; // 10% waste
+            const claddingCost = totalCladdingArea * claddingMaterial.rate * 1.05; // 5% waste
+            const accessoriesCost = (insulationCost + claddingCost) * 0.15; // 15% for accessories
+            
+            const totalMaterialCost = insulationCost + claddingCost + accessoriesCost;
+            
+            // Calculate productivity and manhours
+            let productivity = 2.0; // Default m²/hr/person
+            if (pipeDiameter > 0) {
+                if (pipeDiameter <= 6) productivity = productivityRates.pipe.small;
+                else if (pipeDiameter <= 16) productivity = productivityRates.pipe.medium;
+                else productivity = productivityRates.pipe.large;
+            }
+            
+            // Calculate total crew and manhours
+            let totalCrewSize = 0;
+            let totalLaborCost = 0;
+            let dailyLaborCost = 0;
+            
+            Object.entries(state.crewRates).forEach(([role, data]) => {
+                if (data.enabled && data.quantity > 0) {
+                    totalCrewSize += data.quantity;
+                    const dailyCost = data.quantity * data.rate * 10; // 10 hours/day
+                    dailyLaborCost += dailyCost;
+                    totalLaborCost += dailyCost * state.projectInfo.projectDuration;
+                }
+            });
+            
+            const effectiveProductivity = productivity * Math.max(1, totalCrewSize * 0.8); // Team efficiency factor
+            const totalManhours = totalSurfaceArea > 0 ? totalSurfaceArea / effectiveProductivity : 0;
+            const projectDays = Math.ceil(totalManhours / (totalCrewSize * 10)) || state.projectInfo.projectDuration;
+            
+            // Calculate other costs
+            const equipmentCost = state.settings.equipmentRate * projectDays;
+            const transportCost = state.settings.transportRate * Math.ceil(projectDays / 7); // Weekly transport
+            
+            // Calculate totals
+            const directCosts = totalMaterialCost + totalLaborCost + equipmentCost + transportCost;
+            const overheadCost = directCosts * (state.settings.overheadPercentage / 100);
+            const subtotal = directCosts + overheadCost;
+            const profitAmount = subtotal * (state.settings.profitMargin / 100);
+            const totalCost = subtotal + profitAmount;
+            
+            // Calculate unit rates
+            const unitRateLinear = pipeLength > 0 ? totalCost / pipeLength : 0;
+            const unitRateValve = valveCount > 0 ? totalCost / valveCount : unitRateLinear * 2; // Estimate
+            const unitRateArea = totalSurfaceArea > 0 ? totalCost / totalSurfaceArea : 0;
+            
+            return {
+                pipeSurfaceArea,
+                valveSurfaceArea,
+                totalSurfaceArea,
+                totalInsulationVolume,
+                totalCladdingArea,
+                insulationCost,
+                claddingCost,
+                accessoriesCost,
+                totalMaterialCost,
+                totalLaborCost,
+                dailyLaborCost,
+                equipmentCost,
+                transportCost,
+                directCosts,
+                overheadCost,
+                subtotal,
+                profitAmount,
+                totalCost,
+                totalManhours,
+                totalCrewSize,
+                projectDays,
+                productivity,
+                unitRateLinear,
+                unitRateValve,
+                unitRateArea
+            };
+        }
+
+        // Update results display
+        function updateResults() {
+            const calc = state.calculations;
+            const specs = state.specifications;
+            
+            // Update main results
+            document.getElementById('result-surface-area').textContent = `${calc.totalSurfaceArea.toFixed(2)} m²`;
+            document.getElementById('result-material-qty').textContent = `${calc.totalInsulationVolume.toFixed(3)} m³`;
+            document.getElementById('result-manhours').textContent = `${calc.totalManhours.toFixed(1)} hrs`;
+            document.getElementById('result-total-cost').textContent = formatCurrency(calc.totalCost);
+            
+            // Update unit rates
+            document.getElementById('unit-rate-linear').textContent = `${formatCurrency(calc.unitRateLinear)}/m`;
+            document.getElementById('unit-rate-valve').textContent = `${formatCurrency(calc.unitRateValve)}/ea`;
+            document.getElementById('unit-rate-area').textContent = `${formatCurrency(calc.unitRateArea)}/m²`;
+            
+            // Update pipe diameter display
+            document.getElementById('pipe-diameter-display').textContent = `${specs.pipeDiameter || 0}" pipe`;
+            
+            // Update cost breakdown
+            document.getElementById('material-cost').textContent = formatCurrency(calc.totalMaterialCost);
+            document.getElementById('installation-cost').textContent = formatCurrency(calc.totalLaborCost + calc.equipmentCost + calc.transportCost + calc.overheadCost);
+            document.getElementById('project-margin').textContent = formatCurrency(calc.profitAmount);
+            document.getElementById('margin-percentage').textContent = `${state.settings.profitMargin}% margin`;
+            
+            // Update material displays
+            const materialNames = {
+                mineral_wool: 'Mineral Wool',
+                fiberglass: 'Fiberglass',
+                elastomeric: 'Elastomeric',
+                calcium_silicate: 'Calcium Silicate'
+            };
+            
+            const claddingNames = {
+                aluminum: 'Aluminum',
+                stainless_steel: 'SS Steel',
+                pvc: 'PVC',
+                galvanized: 'Galvanized'
+            };
+            
+            // Use dynamic names from material rates
+            const selectedInsulation = materialRates.insulation[specs.insulationMaterial];
+            const selectedCladding = materialRates.cladding[specs.claddingMaterial];
+            
+            document.getElementById('insulation-material-display').textContent = 
+                selectedInsulation ? selectedInsulation.displayName : 'Unknown';
+            document.getElementById('cladding-material-display').textContent = 
+                selectedCladding ? selectedCladding.displayName : 'Unknown';
+            
+            // Update productivity rate
+            document.getElementById('productivity-rate').textContent = `${calc.productivity} m²/hour`;
+        }
+
+        // Update BOQ
+        function updateBOQ() {
+            const calc = state.calculations;
+            const specs = state.specifications;
+            
+            const boqItems = [
+                {
+                    item: 1,
+                    description: `${materialRates.insulation[specs.insulationMaterial]?.displayName || 'Unknown Insulation'} (${specs.insulationThickness}mm)`,
+                    unit: 'm³',
+                    quantity: calc.totalInsulationVolume.toFixed(3),
+                    unitRate: materialRates.insulation[specs.insulationMaterial]?.rate || 0,
+                    totalCost: calc.insulationCost,
+                    percentage: (calc.insulationCost / calc.totalCost * 100).toFixed(1)
+                },
+                {
+                    item: 2,
+                    description: `${materialRates.cladding[specs.claddingMaterial]?.displayName || 'Unknown Cladding'}`,
+                    unit: 'm²',
+                    quantity: calc.totalCladdingArea.toFixed(2),
+                    unitRate: materialRates.cladding[specs.claddingMaterial]?.rate || 0,
+                    totalCost: calc.claddingCost,
+                    percentage: (calc.claddingCost / calc.totalCost * 100).toFixed(1)
+                },
+                {
+                    item: 3,
+                    description: 'Accessories & Consumables',
+                    unit: 'LS',
+                    quantity: '1.00',
+                    unitRate: calc.accessoriesCost,
+                    totalCost: calc.accessoriesCost,
+                    percentage: (calc.accessoriesCost / calc.totalCost * 100).toFixed(1)
+                },
+                {
+                    item: 4,
+                    description: 'Installation Labor',
+                    unit: 'hrs',
+                    quantity: calc.totalManhours.toFixed(1),
+                    unitRate: calc.totalLaborCost / Math.max(calc.totalManhours, 1),
+                    totalCost: calc.totalLaborCost,
+                    percentage: (calc.totalLaborCost / calc.totalCost * 100).toFixed(1)
+                },
+                {
+                    item: 5,
+                    description: 'Equipment & Tools',
+                    unit: 'days',
+                    quantity: calc.projectDays,
+                    unitRate: state.settings.equipmentRate,
+                    totalCost: calc.equipmentCost,
+                    percentage: (calc.equipmentCost / calc.totalCost * 100).toFixed(1)
+                },
+                {
+                    item: 6,
+                    description: 'Transportation',
+                    unit: 'LS',
+                    quantity: '1.00',
+                    unitRate: calc.transportCost,
+                    totalCost: calc.transportCost,
+                    percentage: (calc.transportCost / calc.totalCost * 100).toFixed(1)
+                },
+                {
+                    item: 7,
+                    description: 'Overhead & Profit',
+                    unit: '%',
+                    quantity: (state.settings.overheadPercentage + state.settings.profitMargin).toFixed(1),
+                    unitRate: calc.overheadCost + calc.profitAmount,
+                    totalCost: calc.overheadCost + calc.profitAmount,
+                    percentage: ((calc.overheadCost + calc.profitAmount) / calc.totalCost * 100).toFixed(1)
+                }
+            ];
+            
+            const tbody = document.getElementById('boq-items');
+            tbody.innerHTML = boqItems.map(item => `
+                <tr>
+                    <td class="text-center">${item.item}</td>
+                    <td>${item.description}</td>
+                    <td class="text-center">${item.unit}</td>
+                    <td class="text-center">${item.quantity}</td>
+                    <td class="text-center">${formatCurrency(item.unitRate)}</td>
+                    <td class="text-right">${formatCurrency(item.totalCost)}</td>
+                    <td class="text-center">${item.percentage}%</td>
+                </tr>
+            `).join('');
+            
+            document.getElementById('boq-total-cost').textContent = formatCurrency(calc.totalCost);
+            document.getElementById('boq-system-type').textContent = state.insulationType.charAt(0).toUpperCase() + state.insulationType.slice(1) + ' Insulation';
+            
+            // Update cost breakdown
+            document.getElementById('cost-breakdown-material').textContent = `${formatCurrency(calc.totalMaterialCost)} (${(calc.totalMaterialCost / calc.totalCost * 100).toFixed(1)}%)`;
+            document.getElementById('cost-breakdown-labor').textContent = `${formatCurrency(calc.totalLaborCost)} (${(calc.totalLaborCost / calc.totalCost * 100).toFixed(1)}%)`;
+            document.getElementById('cost-breakdown-equipment').textContent = `${formatCurrency(calc.equipmentCost + calc.transportCost)} (${((calc.equipmentCost + calc.transportCost) / calc.totalCost * 100).toFixed(1)}%)`;
+            document.getElementById('cost-breakdown-overhead').textContent = `${formatCurrency(calc.overheadCost)} (${(calc.overheadCost / calc.totalCost * 100).toFixed(1)}%)`;
+            document.getElementById('cost-breakdown-profit').textContent = `${formatCurrency(calc.profitAmount)} (${(calc.profitAmount / calc.totalCost * 100).toFixed(1)}%)`;
+            
+            // Update efficiency metrics
+            document.getElementById('efficiency-crew-size').textContent = `${calc.totalCrewSize} people`;
+            document.getElementById('efficiency-duration').textContent = `${calc.projectDays} days`;
+            document.getElementById('efficiency-daily').textContent = `${(calc.totalSurfaceArea / calc.projectDays).toFixed(2)} m²/day`;
+            document.getElementById('efficiency-productivity').textContent = `${(calc.productivity / calc.totalCrewSize).toFixed(2)} m²/hr/person`;
+            document.getElementById('efficiency-cost-per-m2').textContent = formatCurrency(calc.unitRateArea);
+        }
+
+        // Update workforce
+        function updateWorkforce() {
+            const calc = state.calculations;
+            
+            // Update workforce cards
+            document.getElementById('workforce-total').textContent = calc.totalCrewSize;
+            
+            const directInstallers = (state.crewRates.supervisor.enabled ? state.crewRates.supervisor.quantity : 0) +
+                                   (state.crewRates.leadInsulator.enabled ? state.crewRates.leadInsulator.quantity : 0) +
+                                   (state.crewRates.mechanic.enabled ? state.crewRates.mechanic.quantity : 0);
+            
+            document.getElementById('workforce-installers').textContent = directInstallers;
+            document.getElementById('workforce-duration').textContent = calc.projectDays;
+            document.getElementById('workforce-daily-cost').textContent = Math.round(calc.dailyLaborCost);
+            
+            // Update crew breakdown
+            const crewBreakdown = document.getElementById('crew-breakdown');
+            let breakdownHtml = '';
+            
+            Object.entries(state.crewRates).forEach(([role, data]) => {
+                if (data.enabled && data.quantity > 0) {
+                    const dailyCost = data.quantity * data.rate * 10;
+                    const roleName = role.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
+                    
+                    breakdownHtml += `
+                        <div style="background: white; padding: 0.75rem; border-radius: 0.5rem; border: 1px solid #e5e7eb;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <p style="font-weight: 600; font-size: 0.875rem;">${roleName}</p>
+                                    <p style="font-size: 0.75rem; color: #6b7280;">${data.quantity} × SAR ${data.rate}/hr</p>
+                                </div>
+                                <div style="text-align: right;">
+                                    <p style="font-weight: bold; color: #3b82f6;">${formatCurrency(dailyCost)}</p>
+                                    <p style="font-size: 0.75rem; color: #6b7280;">/day</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+            
+            crewBreakdown.innerHTML = breakdownHtml;
+            
+            // Update manhour analysis
+            document.getElementById('manhour-total').textContent = `${calc.totalManhours.toFixed(1)} hrs`;
+            document.getElementById('manhour-per-m2').textContent = calc.totalSurfaceArea > 0 ? 
+                `${(calc.totalManhours / calc.totalSurfaceArea).toFixed(2)} hrs/m²` : '0 hrs/m²';
+            document.getElementById('labor-cost-per-m2').textContent = calc.totalSurfaceArea > 0 ? 
+                formatCurrency(calc.totalLaborCost / calc.totalSurfaceArea) : formatCurrency(0);
+        }
+
+        // Update dashboard
+        function updateDashboard() {
+            const calc = state.calculations;
+            const specs = state.specifications;
+            
+            // Update dashboard cards
+            document.getElementById('dashboard-total-cost').textContent = formatCurrency(calc.totalCost);
+            document.getElementById('dashboard-linear-rate').textContent = formatCurrency(calc.unitRateLinear);
+            document.getElementById('dashboard-valve-rate').textContent = formatCurrency(calc.unitRateValve);
+            document.getElementById('dashboard-crew-size').textContent = calc.totalCrewSize;
+            
+            // Update project specifications
+            const selectedInsulation = materialRates.insulation[specs.insulationMaterial];
+            const selectedCladding = materialRates.cladding[specs.claddingMaterial];
+            
+            const specsHtml = `
+                <div style="display: flex; justify-content: space-between; margin: 5px 0;">
+                    <span>System Type:</span>
+                    <span class="font-semibold">${state.insulationType.charAt(0).toUpperCase() + state.insulationType.slice(1)}</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin: 5px 0;">
+                    <span>Pipe Diameter:</span>
+                    <span class="font-semibold">${specs.pipeDiameter || 'N/A'}"</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin: 5px 0;">
+                    <span>Length:</span>
+                    <span class="font-semibold">${specs.pipeLength} m</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin: 5px 0;">
+                    <span>Insulation:</span>
+                    <span class="font-semibold">${specs.insulationThickness}mm ${selectedInsulation?.displayName || 'Unknown'}</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin: 5px 0;">
+                    <span>Cladding:</span>
+                    <span class="font-semibold">${selectedCladding?.displayName || 'Unknown'}</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin: 5px 0;">
+                    <span>Surface Area:</span>
+                    <span class="font-semibold">${calc.totalSurfaceArea.toFixed(2)} m²</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin: 5px 0;">
+                    <span>Operating Temp:</span>
+                    <span class="font-semibold">${state.projectInfo.operatingTemp}°C</span>
+                </div>
+            `;
+            
+            document.getElementById('dashboard-specs').innerHTML = specsHtml;
+            
+            // Update cost summary
+            const costSummaryHtml = `
+                <div style="display: flex; justify-content: space-between; margin: 5px 0;">
+                    <span>Materials:</span>
+                    <span class="font-semibold">${formatCurrency(calc.totalMaterialCost)}</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin: 5px 0;">
+                    <span>Labor:</span>
+                    <span class="font-semibold">${formatCurrency(calc.totalLaborCost)}</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin: 5px 0;">
+                    <span>Equipment:</span>
+                    <span class="font-semibold">${formatCurrency(calc.equipmentCost)}</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin: 5px 0;">
+                    <span>Transport:</span>
+                    <span class="font-semibold">${formatCurrency(calc.transportCost)}</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin: 5px 0;">
+                    <span>Overhead:</span>
+                    <span class="font-semibold">${formatCurrency(calc.overheadCost)}</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin: 5px 0; padding-top: 5px; border-top: 1px solid #d1d5db; font-weight: bold;">
+                    <span>Profit:</span>
+                    <span style="color: #059669;">${formatCurrency(calc.profitAmount)}</span>
+                </div>
+            `;
+            
+            document.getElementById('dashboard-cost-summary').innerHTML = costSummaryHtml;
+        }
+
+        // Utility functions
+        function formatCurrency(amount) {
+            return `SAR ${parseFloat(amount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`;
+        }
+
+        function generateSerial() {
+            const date = new Date();
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+            
+            state.reportSerial = `ICE-${year}${month}${day}-${random}`;
+            document.getElementById('reportSerial').value = state.reportSerial;
+        }
+
+        function generateReport() {
+            alert('Report generation feature coming soon!');
+        }
+
+        function exportToExcel() {
+            alert('Excel export feature coming soon!');
+        }
+
+        function emailReport() {
+            const subject = encodeURIComponent(`Industrial Insulation Estimation - ${state.projectInfo.projectName || 'Project'}`);
+            const body = encodeURIComponent(`Please find the insulation estimation for ${state.projectInfo.projectName || 'your project'}.\n\nSerial: ${state.reportSerial}\nDate: ${new Date().toLocaleDateString()}\n\nBest regards,\nIndustrial Contracting Team`);
+            
+            window.location.href = `mailto:?subject=${subject}&body=${body}`;
+        }
+
+        function printReport() {
+            window.print();
+        }
+
+        function saveSettings() {
+            alert('Settings saved successfully!');
+        }
+
+        function resetAll() {
+            if (confirm('Reset all values? This cannot be undone.')) {
+                location.reload();
+            }
+        }
+    </script>
+</body>
+</html>
